@@ -1,0 +1,215 @@
+
+
+
+<!--{{ obj.Hopital_id }}-->
+     <!--{{ obj.hospital_name }}-->
+      <!--{{ obj.hospital_mail }}-->
+<!--{{ obj.Hopital_t_beds }}"-->
+      <!--{{ obj.Hopital_v_beds }}"-->
+		<!--{{ obj.Hopital_r_beds }}"-->
+<!--{{ obj.Hospital_pass}}-->
+
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+  <meta name="generator" content="Jekyll v3.8.5">
+  <title>Checkout example ยท Bootstrap</title>
+
+  <link rel="canonical" href="https://getbootstrap.com/docs/4.3/examples/checkout/">
+
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+  <style>
+    .bd-placeholder-img {
+      font-size: 1.125rem;
+      text-anchor: middle;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+    }
+
+    @media (min-width: 768px) {
+      .bd-placeholder-img-lg {
+        font-size: 3.5rem;
+      }
+    }
+    .patient{
+        font-size:17px;
+    }
+  </style>
+  <!-- Custom styles for this template -->
+  <link href="form-validation.css" rel="stylesheet">
+
+
+  <!-- adding navbar -->
+
+
+  <!--ending of navbar-->
+
+
+
+</head>
+<nav class="navbar navbar-expand-lg navbar navbar-dark bg-dark">
+    <a class="navbar-brand" href="#">iCLINIC</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a href="../" class="nav-link">LogOut</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#"></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#"></a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+
+<body class="bg-light">
+  <div class="container">
+        <div class="row">
+           <div class="col-sm-12 text-center">
+              <img class="d-block mx-auto mb-1" src="/docs/4.3/assets/brand/bootstrap-solid.svg" alt="" width="25" height="25">
+             <h1>Hospital Name:{{obj.hospital_name}}</h1>
+             <h3>Hospital ID :{{ obj.Hopital_id }}</h3>
+             <h3>Hospital Mail:{{ obj.hospital_mail }}</h3>
+           </div>
+        </div>
+        <div class="row" style="margin-top:50px;">
+            <div class="col-sm-6">
+                  <div style="align-content: center">
+                  <div class="row">
+                    <div class="col-md-12 order-md-1">
+                      <h2>Hospital details</h2>
+                      <div style="padding:10px;">
+                      <form action="updatehospital/" method="post" class="needs-validation" novalidate>{% csrf_token %}
+                        <div class="mb-3">
+                          <label for="beds">Total Beds</label>
+                          <input type="text" name="hmail" value="{{obj.hospital_mail}}"  style="display:none">
+                          <input type="text" name="hid" value="{{ obj.Hopital_id }}"  style="display:none">
+                          <input type="text" class="form-control" id="beds" name="beds" value="{{ obj.Hopital_t_beds }}" required>
+                          <div class="invalid-feedback">
+                            Valid No is required.
+                          </div>
+                        </div>
+
+                        <div class="mb-3">
+                          <label for="abeds">Available Beds</label>
+                          <input type="text" class="form-control" id="abeds" name="abeds" value="{{ obj.Hopital_v_beds }}" required>
+
+                          <div class="invalid-feedback">
+                            Valid No is required.
+                          </div>
+                        </div>
+
+
+                          <div class="mb-3">
+                          <label for="pass">Password</label>
+                          <input type="number" class="form-control" id="pass" name="pass" value="{{ obj.Hospital_pass }}" required>
+
+                          <div class="invalid-feedback">
+                            Valid No is required.
+                          </div>
+                        </div>
+
+
+
+
+                        <hr class="mb-4">
+                        <button class="btn btn-primary btn-lg btn-block" type="submit">Update now now!</button>
+                      </form>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+            </div>
+            <div class="col-sm-6" >
+              <h2>Patient List</h2>
+                <div style="border-left:1px solid black;height:400px;overflow:auto">
+
+                  <ol>
+                      {% for x in pend %}
+                      <li class="patient"><b>{{ x.P_name}}</b>
+                            <ul>
+                                <li>Attendent : {{x.A_name}}</li>
+                                <li>Mobile : {{x.Mobile}}</li>
+                                <li>address : {{x.P_address}}</li>
+                            </ul>
+                        </li>
+                      {% endfor %}
+                  </ol>
+                </div>
+            </div>
+         </div>
+<!--
+{{P_name}}
+{{A_name}}
+{{Mobile}}
+{{P_address}}
+{{process}}
+
+--> <hr>
+      <div class="row" style="height:500px;">
+          <div class="col-sm-6">
+              <h1>Approve Patient</h1>
+                <form action="approve" method="post">{% csrf_token %}
+                    <select class="form-control" name="approve">
+                        {% for x in pend %}
+                        <option>{{ x.P_name}}</option>
+                        {% endfor %}
+                    </select>
+                    <hr>
+                    <button class="btn btn-primary btn-lg btn-block" type="submit">Approve</button>
+
+                </form>
+              <br>
+              <h1>Release Patient</h1>
+                <form action="release" method="post">{% csrf_token %}
+                    <select class="form-control" name="release">
+                        {% for x in appr %}
+                        <option>{{ x.P_name}}</option>
+                        {% endfor %}
+                    </select>
+                    <hr>
+                        <button class="btn btn-primary btn-lg btn-block" type="submit">Release</button>
+                </form>
+
+          </div>
+          <div class="col-sm-6">
+              <h2>Admitted Patient List</h2>
+                <div style="border-left:1px solid black;height:400px;overflow:auto">
+
+                  <ol>
+                      {% for x in appr %}
+                      <li class="patient"><b>{{ x.P_name}}</b>
+                            <ul>
+                                <li>Attendent : {{x.A_name}}</li>
+                                <li>Mobile : {{x.Mobile}}</li>
+                                <li>address : {{x.P_address}}</li>
+                            </ul>
+                        </li>
+                      {% endfor %}
+                  </ol>
+                </div>
+          </div>
+      </div>
+    <footer class="my-5 pt-5 text-muted text-center text-small">
+      <p class="mb-1">&copy; 2019</p>
+    </footer>
+  </div>
+
+
+</body>
+</html>
